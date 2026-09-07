@@ -1,5 +1,4 @@
 # Dotfile Instrumentality Project
-
 ![](https://img.shields.io/badge/Fedora-blue?style=for-the-badge)
 ![](https://img.shields.io/badge/zsh-red?style=for-the-badge)
 ![](https://img.shields.io/badge/Hyprland-blue?style=for-the-badge)
@@ -15,29 +14,32 @@
 
 ---
 
-### Simplicity is the ultimate form of perfection
+## Simplicity is the ultimate form of perfection
 
 Maintaining a huge set of configs & constantly chasing for perfection is distraction.
 It will probably escalate into ~70k lines of bash. It always does.
 
 ---
 
-### FAQ
+## FAQ
 
-<br/>
+> [!NOTE]
+> The dotfile instrumentality project is wip. Some values are hardcoded, so it won't work on your computer as is.[^1]
 
->Are these dotfiles good?
+> [!CAUTION]
+> Being in space without a spacesuit can have a negative impact on your health!
+
+### Are these dotfiles good?
+No
+
+### Should I use these dotfiles?
 
 No
 
-<br/>
-
->Should I use these dotfiles?
-
-No
-
-<br/>
-
->Is this FAQ useless?
-
+### Is this FAQ useless?
 Yes
+
+### How many different markdown elements do you want to use?
+Yes
+
+[^1]: This is a footnote
