@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+##
+ # Find & edit dot configs
+ # simple and fast
+ ##
+
+set -euo pipefail
+
+DOTS="$HOME/dots"
+FZF_OPTS="--height=50% --layout=reverse --border=rounded --info=hidden --header=Dotfiles"
+
+config=$(
+    find "$DOTS" -mindepth 1 -maxdepth 1 -type d -printf "%f\n" |
+    fzf $FZF_OPTS --prompt="Config: "
+) || exit 0
+
+# currently I only have configs in .{config,local}
+# so this is good enough
+config_dir_name=".config"
+[ -d "$DOTS/$config/.config" ] || config_dir_name=".local"
+
+config_dir=$(
+    find "$DOTS/$config/$config_dir_name" -mindepth 1 -maxdepth 1 -type d -printf "%f\n"
+) || exit 0
+
+file=$(
+    find "$DOTS/$config/$config_dir_name/$config_dir" -type f |
+    fzf $FZF_OPTS --prompt "File: "
+) || exit 0
+
+nvim "$file"

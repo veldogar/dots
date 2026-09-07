@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+##
+ # SELECTING WALLPAPER
+ # +ADAPT NEW COLORSCHEME
+##
+
+set -euo pipefail
+
+WALLPAPER="$HOME/Bilder/Wallpaper"
+ROFI="$HOME/.config/rofi/themes/wallpaper.rasi"
+
+SELECT=$(
+  for i in "$WALLPAPER/"*; do
+    [[ -f "$i" ]] || continue
+    printf "%s\x00icon\x1f%s\n" "$i" "$i"
+  done |
+  rofi -show -dmenu -theme "$ROFI"
+)
+
+[[ -n "$SELECT" ]] || exit 0
+
+hyprctl hyprpaper wallpaper "HDMI-A-1,$SELECT" || true
+hyprctl hyprpaper wallpaper "DP-3,$SELECT" || true
+
+cat > ~/.config/hypr/hyprpaper.conf <<EOF
+splash = false
+
+wallpaper {
+    monitor = HDMI-A-1
+    path = $SELECT
+    fit_mode = cover
+}
+
+wallpaper {
+    monitor = DP-3
+    path = $SELECT
+    fit_mode = cover
+}
+EOF
+
+wal -q -n -e -i "$SELECT" > /dev/null 2>&1
+
+swaync-client -rs
+
+pkill waybar || true
+waybar --config ~/.config/waybar/config_top.jsonc &
+waybar &

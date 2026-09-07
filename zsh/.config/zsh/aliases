@@ -1,0 +1,24 @@
+##
+ # do i really use them
+ # that's here the question
+ ##
+
+
+alias e='eza --icons=always -h'
+alias el='eza --icons=always -lah'
+alias e.='eza --icons=always -hd .*'
+
+alias ls='ls --color=auto -h'
+alias l='ls -lah'
+alias l.='ls -hd .*'
+alias grep='grep --color=auto'
+alias b='bat'
+
+alias cb='cmake --build ./build'
+
+alias ff='fastfetch'
+
+alias ec='edit_config'
+
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index}"; unset index

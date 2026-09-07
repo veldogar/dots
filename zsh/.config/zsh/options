@@ -1,0 +1,35 @@
+setopt autocd
+setopt nobeep
+setopt correct
+
+HISTFILE="${HOME}/.cache/zsh/zsh_history"
+HISTSIZE=5000
+SAVEHIST=2000
+
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+
+
+##
+ # directory stack
+ ##
+
+# push the visited dir
+setopt AUTO_PUSHD
+
+# no dups
+setopt PUSHD_IGNORE_DUPS
+
+# no print after push
+setopt PUSHD_SILENT
+
+##
+ # completions
+ ##
+
+setopt MENU_COMPLETE
+setopt AUTO_LIST

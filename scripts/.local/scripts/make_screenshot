@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+##
+ # I wanna make some screenshots
+##
+
+set -euo pipefail
+
+screenshot_path="$HOME/Bilder/Screenshots"
+selection_mode=false
+
+mkdir -p "$screenshot_path"
+
+# select area?
+while getopts "s" opt; do
+    case "$opt" in
+        s) selection_mode=true;;
+    esac
+done
+
+file="$screenshot_path/screenshot-$(date +%Y%m%d-%H%M%S).png"
+
+if "$selection_mode"; then
+    geo="$(slurp 2>/dev/null)" || exit 0
+    grim -g "$geo" - | tee "$file" | wl-copy
+else
+    grim - | tee "$file" | wl-copy
+fi
+
+notify-send -a Screenshot --icon="$file" "Screenshot saved" "$(basename "$file")"

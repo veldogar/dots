@@ -1,0 +1,71 @@
+# My very humble theme / prompt
+# as simple as possible
+# - ( don't overengineer like usual veldogar ) -
+# let me point out that zsh can be really extensive and complicated
+# I just wanna have a clean nice prompt 
+# and now I had to deal with obscure black magic /s :'( xD
+
+# Comment for my future me:
+#   show untracked files?
+#
+# You're without doubt the worst hookup function I've ever heard of
+#   But you have heard of me <3
++vi-git-info () {
+    local ahead behind
+    local -a gitstatus
+
+    ahead=$(git rev-list --count @{upstream}..HEAD 2>/dev/null)
+    behind=$(git rev-list --count HEAD..@{upstream} 2>/dev/null)
+
+    # if not 0 append to array
+    (( ahead ))  && gitstatus+=( "↑${ahead} " )
+    (( behind )) && gitstatus+=( "↓${behind} " )
+
+    # hijacking misc
+    # (j::) join with '' as separator
+    hook_com[misc]="${(j::)gitstatus}"
+
+    # on a commit HEAD doesn't point to a branch
+    #  -> detached HEAD
+    # do I really need this information?
+    if ! git symbolic-ref --quiet HEAD >/dev/null 2>&1; then
+        hook_com[branch]="@$(git rev-parse --short HEAD)"
+    fi
+}
+
+prompt_clean_setup () {
+    autoload -Uz add-zsh-hook
+    autoload -Uz vcs_info
+    add-zsh-hook precmd prompt_clean_precmd
+
+    zstyle ':vcs_info:git*+set-message:*' hooks git-info
+    zstyle ':vcs_info:git:*' check-for-changes true
+    zstyle ':vcs_info:git:*' stagedstr '+'
+    zstyle ':vcs_info:git:*' unstagedstr '*'
+    zstyle ':vcs_info:git:*' formats '%b%c%u %m'
+    zstyle ':vcs_info:git:*' actionformats '%b%c%u %mA '
+
+    #prompt_opts=( cr percent sp )
+
+    # if psvar[1] is not empty, print git info
+    local p_vcs="%(1v.%1v.)"
+
+    # are we ssh-ing?
+    local p_ssh
+    [[ -n "$SSH_CLIENT" ]] && p_ssh='%F{yellow}s '
+
+    PS1="${p_ssh}%f%F{blue}%~%f %F{red}${p_vcs}%f$ "
+}
+
+prompt_clean_precmd () {
+    setopt noxtrace noksharrays localoptions
+
+    # I will use psvar to "pass" vars to my prompt
+    # I don't want to set promptsubst
+    psvar=()
+
+    vcs_info
+    [[ -n $vcs_info_msg_0_ ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
+prompt_clean_setup "$@"

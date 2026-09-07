@@ -1,0 +1,22 @@
+/*
+ * MAIN CONFIGS & COLORS
+ * common things in all substyles
+ */
+
+@import "~/.cache/wal/colors-rofi-dark.rasi"
+
+configuration {
+    //font: "JetBrains Mono Nerd Font 13";
+    show-icons: true;
+    hover-select: false;
+}
+
+* {
+    background-alt:              @selected-active-background;
+    selected:                    @selected-normal-background;
+    active:                      @selected-urgent-background;
+    urgent:                      @selected-normal-background;
+
+    text-selected:               @background;
+    text:                        @foreground;
+}
