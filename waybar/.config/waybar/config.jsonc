@@ -53,19 +53,6 @@
         "escape": true
     },
 
-
-    "custom/power": {
-        "format" : "<span size='16pt'>⏻</span>",
-            "tooltip": false,
-            "menu": "on-click",
-            "menu-file": "~/.config/waybar/power_menu.xml",
-            "menu-actions": {
-                "shutdown": "poweroff",
-                "reboot": "reboot",
-                "suspend": "systemctl suspend"
-        }
-    },
-
     "clock": {
         "interval": 1,
         "format-alt": "{:%a %Y-%m-%d}",

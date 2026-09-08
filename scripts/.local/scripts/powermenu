@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+##
+ # With the power to poweroff comes greate responsibility
+##
+
+set -euo pipefail
+
+ROFI="$HOME/.config/rofi/themes/powermenu.rasi"
+POWEROFF="⏻"
+REBOOT="󰑓"
+SUSPEND="󰤄"
+
+SELECT=$(
+    echo -e "$POWEROFF\n$REBOOT\n$SUSPEND" |
+    rofi -dmenu -theme "$ROFI"
+)
+
+[[ -n "$SELECT" ]] || exit 0
+
+case "$SELECT" in
+    "$POWEROFF")
+        systemctl poweroff;;
+    "$REBOOT")
+        systemctl reboot;;
+    "$SUSPEND")
+        systemctl suspend;;
+esac

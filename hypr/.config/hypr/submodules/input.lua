@@ -85,6 +85,9 @@ hl.bind(mainMod .. " + T",  hl.dsp.exec_cmd("swaync-client -t -sw"), { locked = 
 -- Select wallpaper
 hl.bind(mainMod .. " + SHIFT + M",  hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/scripts/select_wallpaper"))
 
+-- Poweroff
+hl.bind(mainMod .. " + SHIFT + P",  hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/scripts/powermenu"))
+
 -- Make screenshots
 hl.bind(mainMod .. " + S",         hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/scripts/make_screenshot"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/scripts/make_screenshot -s"))

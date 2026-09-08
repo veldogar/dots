@@ -1,0 +1,57 @@
+@import "default.rasi"
+
+configuration {
+    show-icons: false;
+}
+
+/* Is it a good idea to hardcode a value like 600px ? */
+/* the mystery of css */
+window {
+    width: 600px;
+    background-color: transparent;
+}
+
+mainbox {
+    background-color: @background;
+    border: 3px solid;
+    border-radius: 32px;
+    border-color: @selected;
+    children: [ "listview" ];
+}
+
+listview {
+    text-color: @foreground;
+    background-color: @background;
+    margin: 10px;
+    padding: 10px;
+
+    columns: 3;
+    lines: 1;
+    cycle: true;
+    scrollbar: false;
+    layout: vertical;
+    reverse: false;
+    fixed-height: true;
+    fixed-columns: true;
+}
+
+element {
+    margin: 4px;
+    padding: 32px;
+    border-radius: 48px;
+    background-color: @background;
+    text-color: @foreground;
+}
+
+element-text {
+    text-color: @foreground;
+    background-color: transparent;
+    font: "Noto Color Emoji 32";
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+}
+
+element selected.normal {
+    text-color: @foreground;
+    background-color: @selected;
+}

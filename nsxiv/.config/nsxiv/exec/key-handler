@@ -20,7 +20,7 @@
 
 copy_to_desktop() {
   while read LINE; do
-    cp $LINE ~/Schreibtisch/
+    cp $LINE "$HOME/Schreibtisch/"
     notify-send "$LINE copied to desktop."
   done
 }

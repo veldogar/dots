@@ -23,7 +23,7 @@ SELECT=$(
 hyprctl hyprpaper wallpaper "HDMI-A-1,$SELECT" || true
 hyprctl hyprpaper wallpaper "DP-3,$SELECT" || true
 
-cat > ~/.config/hypr/hyprpaper.conf <<EOF
+cat > "$HOME/.config/hypr/hyprpaper.conf" <<EOF
 splash = false
 
 wallpaper {
@@ -44,5 +44,5 @@ wal -q -n -e -i "$SELECT" > /dev/null 2>&1
 swaync-client -rs
 
 pkill waybar || true
-waybar --config ~/.config/waybar/config_top.jsonc &
+waybar --config "$HOME/.config/waybar/config_top.jsonc" &
 waybar &
