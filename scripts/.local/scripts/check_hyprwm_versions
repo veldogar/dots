@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# I package the hyprland ecosystem for fedora by myself and for myself
+# so I need to keep track of upstream versions
+# this script makes assumptions, exempli gratia:
+# * hyprwm github tags begin with v
+# * hyprwm projects are hosted on github not gitlab etc
+# * ...
+#
+# It is good enough for my usecases
+
+set -euo pipefail
+
+API="https://api.github.com/repos"
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+packages=(
+    "Hyprland"
+    "aquamarine"
+    "hyprcursor"
+    "hyprgraphics"
+    "hyprland-guiutils"
+    "hyprland-protocols-devel"
+    "hyprlang"
+    "hyprpaper"
+    "hyprtoolkit"
+    "hyprutils"
+    "hyprwayland-scanner-devel"
+    "hyprwire"
+    "hypridle"
+    "xdg-desktop-portal-hyprland"
+)
+
+exit_status=0
+
+# $1 repo, e.g. hyprwm/Hyprland
+get_tag () {
+    curl -fsS "$API/$1/releases/latest" | jq -er '.tag_name'
+}
+
+# $1 package name
+repoquery () {
+    echo "$(dnf repoquery -q --repo=rimuru --latest-limit=1 --qf '%{url}|%{version}' "$1")"
+}
+
+# $1 repo, $2 name, $3 local version
+cmp_ver () {
+    local ver
+    local color=$NC
+    ver=$(get_tag "$1") || {
+       printf '%s: error fetching version\n' "$2"
+       exit 1
+    }
+
+    [[ "$ver" == "$3" ]] || { color=$RED; exit_status=1; }
+    printf '%-32s %s / %b%s%b\n' "$2" "$ver" "$color" "$3" "$NC"
+}
+
+for item in "${packages[@]}"; do
+    IFS='|' read -r url ver <<< "$(repoquery "$item")"
+    repo="${url#https://github.com/}"
+    repo="${repo%/}"
+    cmp_ver "$repo" "${item%-devel}" "v$ver"
+done
+
+exit $exit_status
